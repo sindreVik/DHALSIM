@@ -72,8 +72,6 @@ class GeneralCPS(MiniCPS):
         with self.intermediate_yaml.open(mode='r') as file:
             self.data = yaml.safe_load(file)
 
-        if self.data["mininet_cli"]:
-            CLI(self.net)
 
         self.plc_processes = None
         self.scada_process = None
@@ -168,6 +166,10 @@ class GeneralCPS(MiniCPS):
         self.plant_process = subprocess.Popen(cmd, stderr=sys.stderr, stdout=sys.stdout)
 
         self.logger.debug("Launched the plant processes.")
+
+        if self.data["mininet_cli"]:
+            CLI(self.net)
+
         self.poll_processes()
         self.finish()
 
